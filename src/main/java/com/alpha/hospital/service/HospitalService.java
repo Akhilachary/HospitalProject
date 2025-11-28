@@ -1,13 +1,11 @@
 package com.alpha.hospital.service;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.alpha.hospital.Exception.PatientAlreadyPresentException;
 import com.alpha.hospital.Exception.PatientNotFoundException;
+import com.alpha.hospital.dto.PatientDTO;
 import com.alpha.hospital.dto.ResponseStructure;
 import com.alpha.hospital.entity.Patient;
 import com.alpha.hospital.repository.HospitalRepository;
@@ -19,12 +17,13 @@ public class HospitalService {
 	private HospitalRepository repository;
 	
 	
-	public ResponseStructure<Patient> savePatient(Patient patient) {
-
-		Optional<Patient> optional = repository.findById(patient.getId());
-		if(optional.isPresent()) {
-			throw new PatientAlreadyPresentException();
-		}
+	public ResponseStructure<Patient> savePatient(PatientDTO patientdto) {
+		
+		Patient patient = new Patient();
+		patient.setName(patientdto.getName());
+		patient.setAge(patientdto.getAge());
+		patient.setMobile(patientdto.getPhone());
+		patient.setDisease(patientdto.getDisease());
 		repository.save(patient);
 		
 		ResponseStructure<Patient> responseStructure = new ResponseStructure<Patient>();

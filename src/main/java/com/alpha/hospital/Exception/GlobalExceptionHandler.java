@@ -1,6 +1,11 @@
 package com.alpha.hospital.Exception;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -29,11 +34,19 @@ public class GlobalExceptionHandler {
 	}
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseStructure<String> methodArgumentNotValidException(MethodArgumentNotValidException ex) {
-		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
+	public ResponseStructure<Map<String, String>> methodArgumentNotValidException(MethodArgumentNotValidException ex) {
+		
+		List<FieldError> errors = ex.getFieldErrors();
+		
+		Map<String, String> map = new HashMap<String, String>();
+		for (FieldError fieldError : errors) {
+			map.put(fieldError.getField(), fieldError.getDefaultMessage());
+		}
+		
+		ResponseStructure<Map<String, String>> responseStructure = new ResponseStructure<Map<String, String>>();
 		responseStructure.setStatuscode(HttpStatus.BAD_REQUEST.value());
 		responseStructure.setMessage("METHOD ARGUMENT NOT VALID ");
-		responseStructure.setData(ex.getMessage());
+		responseStructure.setData(map);
 		return responseStructure;
 	}
 	

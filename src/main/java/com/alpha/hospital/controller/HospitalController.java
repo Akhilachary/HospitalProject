@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alpha.hospital.dto.PatientDTO;
 import com.alpha.hospital.dto.ResponseStructure;
 import com.alpha.hospital.entity.Patient;
 import com.alpha.hospital.service.HospitalService;
@@ -23,8 +24,8 @@ public class HospitalController {
 	private HospitalService service;
 	
 	@PostMapping("/savePatient")
-	public ResponseStructure<Patient> savePatient(@RequestBody Patient patient) {
-		return service.savePatient(patient);
+	public ResponseStructure<Patient> savePatient(@RequestBody PatientDTO patientdto) {
+		return service.savePatient(patientdto);
 	}
 	
 	@GetMapping("/findPatient")
