@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -48,6 +49,20 @@ public class GlobalExceptionHandler {
 		responseStructure.setMessage("METHOD ARGUMENT NOT VALID ");
 		responseStructure.setData(map);
 		return responseStructure;
+	}
+	
+	@ExceptionHandler(TransactionSystemException.class)
+	public ResponseStructure<String> transactionSystemException(TransactionSystemException ex) {
+		 ResponseStructure<String> rs = new ResponseStructure<>();
+
+		    // Get the exact underlying error
+		    String message = ex.getMostSpecificCause().getMessage();
+
+		    rs.setStatuscode(HttpStatus.BAD_REQUEST.value());
+		    rs.setMessage("Validation Failed");
+		    rs.setData(message);
+
+		    return rs;
 	}
 	
 }

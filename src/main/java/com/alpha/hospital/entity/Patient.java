@@ -13,13 +13,11 @@ import jakarta.validation.constraints.Positive;
 @Entity
 public class Patient {
 	
-	@Positive
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	@Length(min = 3,max = 16)
 	private String name;
-	@Positive
 	@Min(value = 18)
 	private int age;
 	@Digits(integer = 10,fraction = 0)

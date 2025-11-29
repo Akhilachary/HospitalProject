@@ -12,12 +12,12 @@ public class PatientDTO {
 
 	@Length(min = 3,max = 16)
 	private String name;
-	@Positive
 	@Min(value = 18)
 	private int age;
 	@Digits(integer = 10, fraction = 0)
 	private long phone;
 	@Length(min = 2,max = 20)
+	
 	private String disease;
 
 	public String getName() {
