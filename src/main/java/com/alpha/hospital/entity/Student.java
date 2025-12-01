@@ -1,7 +1,9 @@
 package com.alpha.hospital.entity;
 
+
 import org.hibernate.validator.constraints.Length;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,7 +21,7 @@ public class Student {
 	private int age;
 	@Min(value = 60)
 	private double mark;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Course course;
 
 	public int getId() {
